@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace FinanceManager.Services
 {
-    public class CosmosService
+    public class CosmosService : ICosmosService
     {
         private readonly CosmosCredentials credentials;
         private readonly CosmosClient cosmosClient;
