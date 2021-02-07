@@ -33,6 +33,9 @@ namespace FinanceManager.API.Functions.Household
                 string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
                 var household = JsonConvert.DeserializeObject<Models.Household>(requestBody);
 
+                if (household is null)
+                    return new BadRequestObjectResult("No body found.");
+
                 if (string.IsNullOrWhiteSpace(household.Id))
                     household.Initialise();
 
