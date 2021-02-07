@@ -20,7 +20,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Functions\" />
     <Folder Include="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FinanceManager.Data\FinanceManager.Models.csproj" />
+    <ProjectReference Include="..\FinanceManager.Services\FinanceManager.Services.csproj" />
   </ItemGroup>
 </Project>

@@ -2,7 +2,7 @@
 
 namespace FinanceManager.Models
 {
-    public interface IDocument
+    public interface IBaseModel
     {
         string Id { get; set; }
         DateTimeOffset CreatedAt { get; set; }

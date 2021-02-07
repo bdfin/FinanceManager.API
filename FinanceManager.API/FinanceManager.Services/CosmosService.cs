@@ -21,7 +21,7 @@ namespace FinanceManager.Services
         {
             this.credentials = credentials;
 
-            CosmosClientOptions options = new CosmosClientOptions()
+            var options = new CosmosClientOptions()
             {
                 SerializerOptions = new CosmosSerializationOptions()
                 {
@@ -36,8 +36,11 @@ namespace FinanceManager.Services
 
         public async Task<T> CreateItemAsync<T>(T item)
         {
-            if (item is IDocument)
-                (item as IDocument).CreatedAt = DateTimeOffset.UtcNow;
+            if (item is IBaseModel)
+            {
+                (item as IBaseModel).CreatedAt = DateTimeOffset.UtcNow;
+                (item as IBaseModel).UpdatedAt = DateTimeOffset.UtcNow;
+            }
 
             var result = await container.CreateItemAsync(item, new PartitionKey(credentials.PartitionKey));
 
@@ -49,8 +52,8 @@ namespace FinanceManager.Services
             if (string.IsNullOrWhiteSpace(id))
                 throw new ArgumentNullException(nameof(id));
 
-            if (item is IDocument)
-                (item as IDocument).UpdatedAt = DateTimeOffset.UtcNow;
+            if (item is IBaseModel)
+                (item as IBaseModel).UpdatedAt = DateTimeOffset.UtcNow;
 
             var result = await container.ReplaceItemAsync(item, id, new PartitionKey(credentials.PartitionKey));
 
