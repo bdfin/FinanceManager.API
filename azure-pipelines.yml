@@ -9,7 +9,7 @@ variables:
   functionAppName: 'func-finance-manager-api'
 
   # Agent VM image name
-  vmImageName: 'vs2017-win2016'
+  vmImageName: 'windows-latest'
 
   # Working Directory
   workingDirectory: '$(System.DefaultWorkingDirectory)/FinanceManager.API/FinanceManager.API'
@@ -25,6 +25,13 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
+    - task: NuGetCommand@2
+      displayName: Nuget Restore
+      inputs:
+        command: 'restore'
+        restoreSolution: '**/*.sln'
+        feedsToUse: 'select'
+
     - task: DotNetCoreCLI@2
       displayName: Build
       inputs:
