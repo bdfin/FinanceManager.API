@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FinanceManager.API.Functions.Household
@@ -38,7 +39,7 @@ namespace FinanceManager.API.Functions.Household
 
                 var cosmosService = new CosmosService(credentials);
 
-                var household = await cosmosService.LoadItem<Models.Household>(id);
+                var household = cosmosService.LoadItems<Models.Household>(h => h.UserId == id).FirstOrDefault();
 
                 if (household is null)
                     return null;
