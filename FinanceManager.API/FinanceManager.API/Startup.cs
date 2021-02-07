@@ -11,7 +11,7 @@ namespace FinanceManager.API
     {
         public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
         {
-            string connectionString = Environment.GetEnvironmentVariable("FinManagerConfigConnectionString");
+            string connectionString = Environment.GetEnvironmentVariable("ConfigConnectionString");
 
             builder.ConfigurationBuilder.AddAzureAppConfiguration(options =>
             {
