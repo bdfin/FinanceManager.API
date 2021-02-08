@@ -42,7 +42,7 @@ namespace FinanceManager.API.Functions.Household
                 var household = cosmosService.LoadItems<Models.Household>(h => h.UserId == id).FirstOrDefault();
 
                 if (household is null)
-                    return null;
+                    return new NotFoundObjectResult("Could not find household.");
 
                 return new OkObjectResult(household);
             }
