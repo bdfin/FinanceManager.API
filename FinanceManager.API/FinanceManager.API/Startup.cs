@@ -25,7 +25,7 @@ namespace FinanceManager.API
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }
