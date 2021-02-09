@@ -52,8 +52,8 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       artifact: drop
 
-- stage: Publish Nuget Packages
-  displayName: Publish Nuget Packages stage
+- stage: Publish
+  displayName: Publish nuget packages stage
   dependsOn: Build
   condition: succeeded()
 
