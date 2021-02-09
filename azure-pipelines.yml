@@ -52,6 +52,39 @@ stages:
     - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
       artifact: drop
 
+- stage: Publish Nuget Packages
+  displayName: Publish Nuget Packages stage
+  dependsOn: Build
+  condition: succeeded()
+
+  jobs:
+    - job: Publish
+      pool:
+        vmImage: $(vmImageName)
+      
+      steps:
+        - task: PublishSymbols@2
+          inputs:
+            SearchPattern: '**/bin/**/*.pdb'
+            SymbolServerType: 'TeamServices'
+        
+        - task: DotNetCoreCLI@2
+          displayName: .NET Pack
+          inputs:
+            command: 'pack'
+            arguments: '--configuration Release'
+            packagesToPack: '**/*.csproj'
+            versioningScheme: 'off' 
+        
+        - task: NuGetCommand@2
+          inputs:
+            command: 'push'
+            packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+            nuGetFeedType: 'internal'
+            publishVstsFeed: '1a25dfbf-cdeb-4ed3-883b-2b6f02fce11e'
+            allowPackageConflicts: true
+            versioningScheme: 'off'
+
 - stage: Deploy
   displayName: Deploy stage
   dependsOn: Build
