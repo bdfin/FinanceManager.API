@@ -13,8 +13,6 @@ namespace FinanceManager.Models
         [Required]
         public string Name { get; set; }
 
-        public string Email { get; set; }
-
         public decimal Income { get; set; }
 
         public IList<Expense> Expenses { get; set; }
